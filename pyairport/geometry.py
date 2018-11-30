@@ -4,9 +4,10 @@
 class Point(object):
     """Meters coordinates, with attributes x, y: int"""
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, z=0):
         self.x = x
         self.y = y
+        self.z = z
 
     def __repr__(self):
         return "({0.x}, {0.y})".format(self)
@@ -54,21 +55,30 @@ class Vector:
         self.z = point2.z - point1.z
         
     def __repr__(self):
-        return "({0.x}, {0.y})".format(self)
+        return "({0.x}, {0.y}, {0.z})".format(self)
     
     def sca(self, other):
         """sca(Vector) return float
         returns the scalar product between self and other"""
-        return self.x * other.x + self.y * other.y
+        return self.x * other.x + self.y * other.y + self.z * other.z
 
-    def det(self, other):
-        """det(Vector) return float
-        returns the determinant between self and other"""
-        return self.x * other.y - self.y * other.x
+    def vector_prod(self, other):
+        """vector_prod() renvoie le produit vectoriel"""
+        x_prod = self.y*other.z - other.y*self.z
+        y_prod = self.z*other.x - other.z*self.x
+        z_prod = self.x*other.y - other.x*self.y
+        return Vector(x_prod, y_prod, z_prod)
     
     def norm(self):
         """norm of the vector"""
         return((self.x**2 + self.y**2)**0.5)
+        
+    def unit(self):
+        """normalise le vecteur"""
+        self.x = self.x/self.norm()
+        self.y = self.y/self.norm()
+        self.z = self.z/self.norm()
+        
         
 
 class PolyLine(object):

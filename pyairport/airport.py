@@ -110,6 +110,8 @@ class Airport:
 
 # Reading an airport file
 
+
+"""refaire cette fonction en 3D"""
 def xys_to_points(str_xy_list):
     """ xys_to_points(str list) returns Point tuple: converts x,y str list to Point tuple"""
 
