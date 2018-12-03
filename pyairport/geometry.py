@@ -73,17 +73,18 @@ class Vector:
         x_prod = self.y*other.z - other.y*self.z
         y_prod = self.z*other.x - other.z*self.x
         z_prod = self.x*other.y - other.x*self.y
-        return Vector(x_prod, y_prod, z_prod)
+        return Vector(Point(0,0,0), Point(x_prod, y_prod, z_prod))
     
     def norm(self):
         """norm of the vector"""
-        return((self.x**2 + self.y**2)**0.5)
+        return((self.x**2 + self.y**2 + self.z**2)**0.5)
         
     def unit(self):
         """normalise le vecteur"""
         self.x = self.x/self.norm()
         self.y = self.y/self.norm()
         self.z = self.z/self.norm()
+        return(self)
         
         
 
