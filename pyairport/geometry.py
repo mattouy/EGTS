@@ -61,6 +61,12 @@ class Vector:
         """sca(Vector) return float
         returns the scalar product between self and other"""
         return self.x * other.x + self.y * other.y + self.z * other.z
+    
+    def prod_linear(self, reel):
+        self.x = reel*self.x
+        self.y = reel*self.y
+        self.z = reel.self.z
+        return(self)
 
     def vector_prod(self, other):
         """vector_prod() renvoie le produit vectoriel"""
