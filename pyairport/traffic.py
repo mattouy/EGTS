@@ -54,7 +54,7 @@ class Flight:
         self.rwy_t = None
         self.slot = None
         self.route = None
-        self.last_velo = geometry.Vector(0,0)
+        self.last_velo = geometry.Vector(geometry.Point(0,0),geometry.Point(0,0))
 
     def __repr__(self):
         return "<traffic.Flight {0}>".format(self.call_sign)
