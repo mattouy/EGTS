@@ -1,9 +1,10 @@
 import numpy as np
 
-file = open("/Users/matth/eclipse-workspace/EGTS/data_files/lfpg_flights.txt")
+file = open("/Users/matth/eclipse-workspace/EGTS/DATA/lfpg_alti.txt")
 points = []
 for line in file:
     words = line.strip().split()
+    print(words)
     points.append([words[2], words[3]])
 points1 = np.array(points)
 file.close()
