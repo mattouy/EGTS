@@ -8,6 +8,7 @@ import geometry
 import traffic
 import math
 from numpy import roll
+import random as rd
 
 TIRERADIUS = 0.56 #en mètre
 MAXEGTSTORQUE = 16000 #N.m
@@ -41,10 +42,6 @@ def normalisation_vitesse(fichier):
                 velocity[i].append(vitesse(point, point+1).unit())
         return velocity
     
-#def modele_acceleration(fichier_pente,fichier):
-    """ recréer un nouveau fichier lfpg_flight.txt qui prend en compte la pente du terrain"""
-    
-    
 def nextspeedegts(mass, slope, speed):
     """calcul la prochaine vitesse pour un avion EGTS"""
     slope_torque = - mass * 9.81 * math.sin(math.atan(slope/100)) * TIRERADIUS
@@ -55,11 +52,32 @@ def nextspeedegts(mass, slope, speed):
         res_torque = - mass * ROLLINGRESISTANCE * 10 * TIRERADIUS
         egts_torque = min(MAXEGTSTORQUE,EGTSPOWER/(speed/TIRERADIUS))
     aero_torque = AEROCOEF * speed**2
-    torque = egts_torque + slope_torque + res_torque + aero_torque
+    torque = egts_torque + slope_torque + res_torque + aero_torque      
     acc = max(0, torque/TIRERADIUS/mass)
     return(speed + TIMESTEP * acc)
-        
+
+def nextspeedclassic(speed):
+    return(speed+0.9)
+            
+def selection_flight(fichier,quota):
+    """choisi les vols egts sur un fichier classique et renvoie le callsign de ceux choisi"""
+    nb_egts = 0
+    callsign_egts = []
+    with open(fichier) as flight:
+        while nb_egts != quota:
+            for (i,line) in enumerate(flight):
+                words = line.strip.slipt()
+                hasard = rd.randint(0,1)
+                if words[2] == 'M' and hasard == 1:
+                    callsign_egts.append(words[1],i)
+                    nb_egts += 1
+        return callsign_egts
+    
+#def modele_acceleration(fichier_pente):
+    """ recréer un nouveau fichier lfpg_flight.txt qui prend en compte la pente du terrain"""
+    
+    
+
 
                 
                 
-       
