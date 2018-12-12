@@ -7,7 +7,6 @@ Created on 30 nov. 2018
 import geometry
 import traffic
 import math
-from numpy import roll
 import random as rd
 
 TIRERADIUS = 0.56 #en mètre
@@ -60,7 +59,7 @@ def nextspeedclassic(speed):
     return(speed+0.9)
             
 def selection_flight(fichier,quota):
-    """choisi les vols egts sur un fichier classique et renvoie le callsign de ceux choisi"""
+    """choisi les vols egts sur un fichier classique et renvoie une liste de callsign de ceux choisi"""
     nb_egts = 0
     callsign_egts = []
     with open(fichier) as flight:
@@ -73,9 +72,34 @@ def selection_flight(fichier,quota):
                     nb_egts += 1
         return callsign_egts
     
-#def modele_acceleration(fichier_pente):
+def modele_acceleration(fichier_pente, quota):
     """ recréer un nouveau fichier lfpg_flight.txt qui prend en compte la pente du terrain"""
-    
+    callsign_egts = selection_flight(fichier_pente, quota)
+    with open(fichier_pente) as flight:
+        for line in flight:
+            words = line.strip.slipt()
+            speed = 0
+            if words[0] == 'DEP':
+                mass = MASS_A320_DEP
+            elif words[0] == 'ARR':
+                mass == MASS_A320_ARR
+            else :
+                return("Le vol " + words[1] + " n'est ni une arrivée ni un départ.")
+            if words[1] in callsign_egts:
+                """Si le vol est EGTS, lui appliquer le modèle d'accélération"""
+                for point in range(9,len(words)):
+                    slope = words[point][2] #je suppose que point chaque point c'est un tuple de la forme (x,y,pente)
+                    next_speed = nextspeedegts(mass, slope, speed)
+                    
+                    
+            else:
+                """lui appliquer le modèle normal (si celui n'a pas été déjà calculer dans le fichier qu'Ahmet aurait fait (?))"""
+                
+                
+"""Faut-il extraire les vols EGTS et afficher seulement ces vols ou les mélanger avec les autres vols avec un fichier normal qui contient
+vols normaux et vols egts?
+Choisir au le modèle de l'avion parmi la famille A320 pour les différentes masses."""
+
     
 
 
