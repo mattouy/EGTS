@@ -48,7 +48,8 @@ class Point(object):
         
         
 class Vector:
-    """Vector object"""
+    """Vector object
+    Vector(A,B) = AB"""
     def __init__(self, point1, point2):
         self.x = point2.x - point1.x
         self.y = point2.y - point1.y
